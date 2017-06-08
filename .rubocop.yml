@@ -1,0 +1,18 @@
+# This is the configuration used to check the rubocop source code.
+
+Rails:
+  Enabled: true
+
+AllCops:
+  Exclude:
+    - wor-push_notifications-aws.gemspec
+    - spec/**/*
+
+Documentation:
+  Enabled: false
+
+LineLength:
+  Max: 99
+
+Style/FrozenStringLiteralComment:
+  Enabled: false
