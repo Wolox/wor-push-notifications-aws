@@ -9,8 +9,8 @@ Gem::Specification.new do |spec|
   spec.authors       = ["Leandro Masello", "Francisco Landino"]
   spec.email         = ["francisco.landino@wolox.com.ar", "leandro.masello@wolox.com.ar"]
 
-  spec.summary       = 'Easily add push notifications to your application'
-  spec.description   = 'Generate the configuration needed to provide push notifications using Amazon SNS service.'
+  spec.summary       = 'Easily send Push Notifications to your application using AWS Simple Notification Service (SNS)'
+  spec.description   = 'Provide basic set up for storing device tokens and sending Push Notifications to your application using AWS Simple Notification Service (SNS)'
   spec.homepage      = "https://github.com/Wolox/wor-pushes-aws"
   spec.license       = "MIT"
 
