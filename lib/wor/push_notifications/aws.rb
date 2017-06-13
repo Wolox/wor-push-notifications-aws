@@ -4,6 +4,8 @@ require 'wor/push_notifications/aws/push_notifications'
 module Wor
   module PushNotifications
     module Aws
+      DEVICE_TYPES = %w[ios android].freeze
+
       def add_token(user, device_token, device_type)
         PushNotifications.add_token(user, device_token, device_type)
       end
