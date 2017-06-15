@@ -31,7 +31,7 @@ class PushNotifications
     private
 
     def device_type_valid?(device_type)
-      Wor::PushNotifications::Aws::DEVICE_TYPES.include? device_type
+      Wor::PushNotifications::Aws.device_types.include? device_type
     end
 
     def send_notifications_to_user(user, message_content)
