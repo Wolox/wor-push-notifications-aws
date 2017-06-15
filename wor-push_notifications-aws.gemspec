@@ -11,7 +11,7 @@ Gem::Specification.new do |spec|
 
   spec.summary       = 'Easily send Push Notifications to your application using AWS Simple Notification Service (SNS)'
   spec.description   = 'Provide basic set up for storing device tokens and sending Push Notifications to your application using AWS Simple Notification Service (SNS)'
-  spec.homepage      = "https://github.com/Wolox/wor-pushes-aws"
+  spec.homepage      = "https://github.com/Wolox/wor-push_notifications-aws"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files -z`.split("\x0").reject do |f|
