@@ -15,7 +15,7 @@ module Wor
             file_name = 'add_device_token'
             table_name = 'users'
             migration_name = "#{file_name}_to_#{table_name}.rb"
-            if self.class.migration_exists?('db/migrate', file_name)
+            if self.class.migration_exists?('db/migrate', migration_name)
               say_status('skipped', "Migration #{migration_name} already exists")
             else
               migration_template "#{file_name}.rb", "db/migrate/#{migration_name}"
