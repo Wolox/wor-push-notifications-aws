@@ -1,5 +1,5 @@
-class AddDeviceTokenJsonToUsers < ActiveRecord::Migration[5.0]
+class AddDeviceTokenJsonTo<%= table_name.camelize %> < ActiveRecord::Migration<%= migration_version %>
   def change
-    add_column :users, :device_tokens, :json, default: {}
+    add_column :<%= table_name %>, :device_tokens, :json, default: {}
   end
 end
