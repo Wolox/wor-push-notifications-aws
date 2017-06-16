@@ -32,7 +32,8 @@ module Wor
       #               Default is 'users'.
       def self.table_name=(table_name)
         raise ArgumentError, 'Argument must be a string' unless table_name.is_a?(String)
-        @config[:table_name] = table_name
+        raise ArgumentError, 'Argument must not be an empty string' if table_name.empty?
+        @config[:table_name] = table_name.pluralize
       end
 
       def self.device_types

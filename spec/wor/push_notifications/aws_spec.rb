@@ -23,21 +23,44 @@ describe Wor::PushNotifications::Aws do
     context 'when configuring the table name' do
       let!(:default_table_name) { described_class.config[:table_name] }
       context 'with correct values' do
-        let(:new_table_name) { 'clients' }
+        context 'with table name pluralized' do
+          let(:new_table_name) { 'clients' }
 
-        before do
-          described_class.configure do |config|
-            config.table_name = new_table_name
+          before do
+            described_class.configure do |config|
+              config.table_name = new_table_name
+            end
+          end
+
+          it 'can be configured' do
+            expect(described_class.config[:table_name]).to eq(new_table_name)
+          end
+
+          after do
+            described_class.configure do |config|
+              config.table_name = default_table_name
+            end
           end
         end
 
-        it 'can be configured' do
-          expect(described_class.config[:table_name]).to eq(new_table_name)
-        end
+        context 'with table name not pluralized' do
+          let(:new_table_name) { 'client' }
+          let(:new_table_name_pluralized) { 'client'.pluralize }
 
-        after do
-          described_class.configure do |config|
-            config.table_name = default_table_name
+          before do
+            described_class.configure do |config|
+              config.table_name = new_table_name
+            end
+          end
+
+          it 'can be configured' do
+            expect(described_class.config[:table_name]).to eq(new_table_name_pluralized)
+          end
+
+          after do
+            described_class.configure do |config|
+              config.table_name = default_table_name
+            end
           end
         end
       end
@@ -51,7 +74,21 @@ describe Wor::PushNotifications::Aws do
         end
 
         it 'raises ArgumentError' do
-          expect { wrong_config }.to raise_error(ArgumentError)
+          expect { wrong_config }.to raise_error(ArgumentError, 'Argument must be a string')
+        end
+      end
+
+      context 'with empty name' do
+        let(:new_table_name) { '' }
+        let(:wrong_config) do
+          described_class.configure do |config|
+            config.table_name = new_table_name
+          end
+        end
+
+        it 'raises ArgumentError' do
+          expect { wrong_config }.to raise_error(ArgumentError,
+                                                'Argument must not be an empty string')
         end
       end
     end
@@ -86,7 +123,8 @@ describe Wor::PushNotifications::Aws do
           end
 
           it 'raises ArgumentError' do
-            expect { wrong_config }.to raise_error(ArgumentError)
+            expect { wrong_config }.to raise_error(ArgumentError,
+                                                   'Argument must be an array of strings')
           end
         end
         context 'with invalid type (semantically)' do
@@ -98,7 +136,7 @@ describe Wor::PushNotifications::Aws do
           end
 
           it 'raises ArgumentError' do
-            expect { wrong_config }.to raise_error(ArgumentError)
+            expect { wrong_config }.to raise_error(ArgumentError, /Invalid type/)
           end
         end
       end
