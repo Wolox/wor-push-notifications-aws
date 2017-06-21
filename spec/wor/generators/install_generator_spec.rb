@@ -21,11 +21,13 @@ describe Wor::PushNotifications::Aws::Generators::InstallGenerator, type: :gener
     it 'generates the correct structure for initializer' do
       migration_file = "#{current_migration_number}_add_device_token_to_users.rb"
       first_line = "class AddDeviceTokenJsonToUsers < ActiveRecord::Migration#{migration_version}"
+      third_line = "add_column :users, :device_tokens, :json, default: {}"
       expect(destination_root).to(have_structure{
         directory 'db' do
           directory 'migrate' do
             file migration_file do
               contains first_line
+              contains third_line
             end
           end
         end

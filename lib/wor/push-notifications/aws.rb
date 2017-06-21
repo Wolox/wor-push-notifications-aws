@@ -4,23 +4,23 @@ require 'wor/push-notifications/aws/push_notifications'
 module Wor
   module PushNotifications
     module Aws
-      DEVICE_TYPES = %w[ios android].freeze
+      DEVICE_TYPES = %i[ios android].freeze
 
       @config = {
         device_types: DEVICE_TYPES,
-        table_name: 'users'
+        table_name: :users
       }
 
       def self.configure
         yield self
       end
 
-      # Precondition: types must be an array of strings containing valid device types.
+      # Precondition: types must be an array of symbols containing valid device types.
       #               Every type included in this array must be a valid device type
       #               (you can ask for valid device types with the method valid_device_types).
       #               Default is ['ios' 'android'].
       def self.device_types=(types)
-        raise ArgumentError, 'Argument must be an array of strings' unless types.is_a?(Array)
+        raise ArgumentError, 'Argument must be an array of symbols' unless types.is_a?(Array)
         types.each do |type|
           raise ArgumentError, "Invalid type #{type}" unless DEVICE_TYPES.include?(type)
         end
@@ -33,7 +33,7 @@ module Wor
       def self.table_name=(table_name)
         raise ArgumentError, 'Argument must be a string' unless table_name.is_a?(String)
         raise ArgumentError, 'Argument must not be an empty string' if table_name.empty?
-        @config[:table_name] = table_name.pluralize
+        @config[:table_name] = table_name.pluralize.to_sym
       end
 
       def self.device_types

@@ -21,7 +21,7 @@ describe Wor::PushNotifications::Aws do
 
   describe '.configure' do
     context 'when configuring the table name' do
-      let!(:default_table_name) { described_class.config[:table_name] }
+      let!(:default_table_name) { described_class.config[:table_name].to_s }
       context 'with correct values' do
         context 'with table name pluralized' do
           let(:new_table_name) { 'clients' }
@@ -33,7 +33,7 @@ describe Wor::PushNotifications::Aws do
           end
 
           it 'can be configured' do
-            expect(described_class.config[:table_name]).to eq(new_table_name)
+            expect(described_class.config[:table_name]).to eq(new_table_name.to_sym)
           end
 
           after do
@@ -54,7 +54,7 @@ describe Wor::PushNotifications::Aws do
           end
 
           it 'can be configured' do
-            expect(described_class.config[:table_name]).to eq(new_table_name_pluralized)
+            expect(described_class.config[:table_name]).to eq(new_table_name_pluralized.to_sym)
           end
 
           after do
@@ -96,7 +96,7 @@ describe Wor::PushNotifications::Aws do
     context 'when configuring the device types' do
       let!(:default_device_types) { described_class.config[:device_types] }
       context 'with correct values' do
-        let(:new_device_types) { ['android'] }
+        let(:new_device_types) { [:android] }
         before do
           described_class.configure do |config|
             config.device_types = new_device_types
@@ -115,7 +115,7 @@ describe Wor::PushNotifications::Aws do
       end
       context 'with incorrect values' do
         context 'with incorrect argument (syntactically)' do
-          let(:new_device_types) { 'ios' }
+          let(:new_device_types) { :ios }
           let(:wrong_config) do
             described_class.configure do |config|
               config.device_types = new_device_types
@@ -124,11 +124,11 @@ describe Wor::PushNotifications::Aws do
 
           it 'raises ArgumentError' do
             expect { wrong_config }.to raise_error(ArgumentError,
-                                                   'Argument must be an array of strings')
+                                                   'Argument must be an array of symbols')
           end
         end
         context 'with invalid type (semantically)' do
-          let(:new_device_types) { ['android', 'ois'] }
+          let(:new_device_types) { [:android, :ois] }
           let(:wrong_config) do
             described_class.configure do |config|
               config.device_types = new_device_types
