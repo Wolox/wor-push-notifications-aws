@@ -1,5 +1,5 @@
-require 'wor/push_notifications/aws/version'
-require 'wor/push_notifications/aws/push_notifications'
+require 'wor/push-notifications/aws/version'
+require 'wor/push-notifications/aws/push_notifications'
 
 module Wor
   module PushNotifications

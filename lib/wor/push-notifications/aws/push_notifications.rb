@@ -1,5 +1,5 @@
-require 'wor/push_notifications/aws/android_push_json_builder'
-require 'wor/push_notifications/aws/ios_push_json_builder'
+require 'wor/push-notifications/aws/android_push_json_builder'
+require 'wor/push-notifications/aws/ios_push_json_builder'
 
 class PushNotifications
   class << self

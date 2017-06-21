@@ -1,5 +1,5 @@
 require 'generator_spec'
-require 'generators/wor/push_notifications/aws/install_generator'
+require 'generators/wor/push-notifications/aws/install_generator'
 
 describe Wor::PushNotifications::Aws::Generators::InstallGenerator, type: :generator do
   context 'generating the initializer ' do
