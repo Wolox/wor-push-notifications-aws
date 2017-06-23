@@ -40,7 +40,7 @@ module Wor
           end
 
           def table_name
-            'users'
+            Wor::PushNotifications::Aws.table_name
           end
         end
       end
