@@ -1,9 +1,9 @@
 require 'generator_spec'
-require 'generators/wor/push-notifications/aws/install_generator'
+require 'generators/wor/push/notifications/aws/install_generator'
 
-describe Wor::PushNotifications::Aws::Generators::InstallGenerator, type: :generator do
+describe Wor::Push::Notifications::Aws::Generators::InstallGenerator, type: :generator do
   context 'generating the initializer ' do
-    destination File.expand_path('../../../../tmp', __FILE__)
+    destination File.expand_path('./../../../../tmp', __FILE__)
 
     before(:all) do
       prepare_destination
@@ -14,7 +14,7 @@ describe Wor::PushNotifications::Aws::Generators::InstallGenerator, type: :gener
       "[#{Rails::VERSION::MAJOR}.#{Rails::VERSION::MINOR}]" if Rails.version.start_with? '5'
     end
     let(:current_migration_number) do
-      Wor::PushNotifications::Aws::Generators::InstallGenerator
+      Wor::Push::Notifications::Aws::Generators::InstallGenerator
         .current_migration_number("#{destination_root}/db/migrate/")
     end
 

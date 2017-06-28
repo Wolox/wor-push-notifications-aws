@@ -1,5 +1,5 @@
-require 'wor/push-notifications/aws/android_push_json_builder'
-require 'wor/push-notifications/aws/ios_push_json_builder'
+require 'wor/push/notifications/aws/android_push_json_builder'
+require 'wor/push/notifications/aws/ios_push_json_builder'
 
 class PushNotifications
   class << self
@@ -31,7 +31,7 @@ class PushNotifications
     private
 
     def device_type_valid?(device_type)
-      Wor::PushNotifications::Aws.device_types.include? device_type
+      Wor::Push::Notifications::Aws.device_types.include? device_type
     end
 
     def send_notifications_to_user(user, message_content)

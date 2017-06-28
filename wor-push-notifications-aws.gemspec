@@ -1,11 +1,11 @@
 # coding: utf-8
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'wor/push-notifications/aws/version'
+require 'wor/push/notifications/aws/version'
 
 Gem::Specification.new do |spec|
   spec.name          = "wor-push-notifications-aws"
-  spec.version       = Wor::PushNotifications::Aws::VERSION
+  spec.version       = Wor::Push::Notifications::Aws::VERSION
   spec.authors       = ["Leandro Masello", "Francisco Landino"]
   spec.email         = ["francisco.landino@wolox.com.ar", "leandro.masello@wolox.com.ar"]
 
