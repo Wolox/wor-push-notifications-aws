@@ -6,7 +6,6 @@ Rails:
 AllCops:
   Exclude:
     - wor-push-notifications-aws.gemspec
-    - spec/**/*
     - lib/generators/templates/add_device_token.rb
 
 Documentation:
@@ -17,3 +16,9 @@ LineLength:
 
 Style/FrozenStringLiteralComment:
   Enabled: false
+
+Style/BlockDelimiters:
+  IgnoredMethods: ['have_structure']
+
+Metrics/BlockLength:
+  ExcludedMethods: ['describe', 'context', 'before']
