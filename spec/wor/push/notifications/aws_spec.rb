@@ -1,7 +1,7 @@
-require "spec_helper"
+require 'spec_helper'
 
 describe Wor::Push::Notifications::Aws do
-  it "has a version number" do
+  it 'has a version number' do
     expect(Wor::Push::Notifications::Aws::VERSION).not_to be nil
   end
 
@@ -88,7 +88,7 @@ describe Wor::Push::Notifications::Aws do
 
         it 'raises ArgumentError' do
           expect { wrong_config }.to raise_error(ArgumentError,
-                                                'Argument must not be an empty string')
+                                                 'Argument must not be an empty string')
         end
       end
     end
@@ -128,7 +128,7 @@ describe Wor::Push::Notifications::Aws do
           end
         end
         context 'with invalid type (semantically)' do
-          let(:new_device_types) { [:android, :ois] }
+          let(:new_device_types) { %i[android ois] }
           let(:wrong_config) do
             described_class.configure do |config|
               config.device_types = new_device_types
