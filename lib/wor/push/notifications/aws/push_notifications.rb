@@ -58,7 +58,7 @@ class PushNotifications
     end
 
     def sns
-      @sns_client ||= Aws::SNS::Client.new(region: ENV['AWS_REGION_PUSH'])
+      @sns_client ||= Aws::SNS::Client.new(region: Wor::Push::Notifications::Aws.aws_region)
     end
 
     def app_arn(device_type)
@@ -66,12 +66,16 @@ class PushNotifications
     end
 
     def app_arn_for_device
-      { ios: { arn: Rails.application.secrets.sns_app_arn['ios']['arn'],
-               json_builder: IosPushJsonBuilder },
+      {
+        ios: {
+          arn: Wor::Push::Notifications::Aws.aws_ios_arn,
+          json_builder: IosPushJsonBuilder
+        },
         android: {
-          arn: Rails.application.secrets.sns_app_arn['android'],
+          arn: Wor::Push::Notifications::Aws.aws_android_arn,
           json_builder: AndroidPushJsonBuilder
-        } }
+        }
+      }
     end
   end
 end
