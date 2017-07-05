@@ -37,12 +37,48 @@ module Wor
           @config[:table_name] = table_name.pluralize.to_sym
         end
 
+        def self.aws_ios_arn=(aws_ios_arn)
+          raise ArgumentError, 'Argument must be a string' unless aws_ios_arn.is_a?(String)
+          @config[:aws_ios_arn] = aws_ios_arn
+        end
+
+        def self.aws_ios_sandbox=(aws_ios_sandbox)
+          raise ArgumentError, 'Argument must be a boolean' unless boolean?(aws_ios_sandbox)
+          @config[:aws_ios_sandbox] = aws_ios_sandbox
+        end
+
+        def self.aws_android_arn=(aws_android_arn)
+          raise ArgumentError, 'Argument must be a string' unless aws_android_arn.is_a?(String)
+          @config[:aws_android_arn] = aws_android_arn
+        end
+
+        def self.aws_region=(aws_region)
+          raise ArgumentError, 'Argument must be a string' unless aws_region.is_a?(String)
+          @config[:aws_region] = aws_region
+        end
+
         def self.device_types
           @config[:device_types]
         end
 
         def self.table_name
           @config[:table_name]
+        end
+
+        def self.aws_ios_arn
+          @config[:aws_ios_arn]
+        end
+
+        def self.aws_ios_sandbox
+          @config[:aws_ios_sandbox]
+        end
+
+        def self.aws_android_arn
+          @config[:aws_android_arn]
+        end
+
+        def self.aws_region
+          @config[:aws_region]
         end
 
         def self.config
@@ -63,6 +99,10 @@ module Wor
 
         def self.valid_device_types
           DEVICE_TYPES
+        end
+
+        def self.boolean?(value)
+          value.is_a?(TrueClass) || value.is_a?(FalseClass)
         end
       end
     end

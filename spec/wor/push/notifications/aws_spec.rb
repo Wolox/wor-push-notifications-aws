@@ -11,17 +11,17 @@ describe Wor::Push::Notifications::Aws do
     end
 
     it 'has a default table' do
-      expect(described_class.config[:table_name]).not_to be nil
+      expect(described_class.table_name).not_to be nil
     end
 
     it 'has a default device types' do
-      expect(described_class.config[:device_types]).not_to be nil
+      expect(described_class.device_types).not_to be nil
     end
   end
 
   describe '.configure' do
     context 'when configuring the table name' do
-      let!(:default_table_name) { described_class.config[:table_name].to_s }
+      let!(:default_table_name) { described_class.table_name.to_s }
       context 'with correct values' do
         context 'with table name pluralized' do
           let(:new_table_name) { 'clients' }
@@ -33,7 +33,7 @@ describe Wor::Push::Notifications::Aws do
           end
 
           it 'can be configured' do
-            expect(described_class.config[:table_name]).to eq(new_table_name.to_sym)
+            expect(described_class.table_name).to eq(new_table_name.to_sym)
           end
 
           after do
@@ -54,7 +54,7 @@ describe Wor::Push::Notifications::Aws do
           end
 
           it 'can be configured' do
-            expect(described_class.config[:table_name]).to eq(new_table_name_pluralized.to_sym)
+            expect(described_class.table_name).to eq(new_table_name_pluralized.to_sym)
           end
 
           after do
@@ -94,7 +94,7 @@ describe Wor::Push::Notifications::Aws do
     end
 
     context 'when configuring the device types' do
-      let!(:default_device_types) { described_class.config[:device_types] }
+      let!(:default_device_types) { described_class.device_types }
       context 'with correct values' do
         let(:new_device_types) { [:android] }
         before do
@@ -104,7 +104,7 @@ describe Wor::Push::Notifications::Aws do
         end
 
         it 'can be configured' do
-          expect(described_class.config[:device_types]).to eq(new_device_types)
+          expect(described_class.device_types).to eq(new_device_types)
         end
 
         after do
@@ -138,6 +138,118 @@ describe Wor::Push::Notifications::Aws do
           it 'raises ArgumentError' do
             expect { wrong_config }.to raise_error(ArgumentError, /Invalid type/)
           end
+        end
+      end
+    end
+
+    context 'when configuring aws region' do
+      context 'with correct argument' do
+        let(:aws_region) { 'us-west-1' }
+        before do
+          described_class.configure do |config|
+            config.aws_region = aws_region
+          end
+        end
+
+        it 'can be configured' do
+          expect(described_class.aws_region).to eq(aws_region)
+        end
+      end
+
+      context 'with incorrect argument' do
+        let(:wrong_aws_region) { 1234 }
+        let(:wrong_config) do
+          described_class.configure do |config|
+            config.aws_region = wrong_aws_region
+          end
+        end
+
+        it 'raises ArgumentError' do
+          expect { wrong_config }.to raise_error(ArgumentError, /Argument must be a string/)
+        end
+      end
+    end
+
+    context 'when configuring aws ios arn' do
+      context 'with correct argument' do
+        let(:aws_ios_arn) { 'arn:aws:app/APNS_SANDBOX' }
+        before do
+          described_class.configure do |config|
+            config.aws_ios_arn = aws_ios_arn
+          end
+        end
+
+        it 'can be configured' do
+          expect(described_class.aws_ios_arn).to eq(aws_ios_arn)
+        end
+      end
+
+      context 'with incorrect argument' do
+        let(:wrong_arn) { 1234 }
+        let(:wrong_config) do
+          described_class.configure do |config|
+            config.aws_ios_arn = wrong_arn
+          end
+        end
+
+        it 'raises ArgumentError' do
+          expect { wrong_config }.to raise_error(ArgumentError, /Argument must be a string/)
+        end
+      end
+    end
+
+    context 'when configuring aws ios sandbox' do
+      context 'with correct argument' do
+        let(:aws_ios_sandbox) { [true, false].sample }
+        before do
+          described_class.configure do |config|
+            config.aws_ios_sandbox = aws_ios_sandbox
+          end
+        end
+
+        it 'can be configured' do
+          expect(described_class.aws_ios_sandbox).to eq(aws_ios_sandbox)
+        end
+      end
+
+      context 'with incorrect argument' do
+        let(:wrong_aws_ios_sandbox) { 'true' }
+        let(:wrong_config) do
+          described_class.configure do |config|
+            config.aws_ios_sandbox = wrong_aws_ios_sandbox
+          end
+        end
+
+        it 'raises ArgumentError' do
+          expect { wrong_config }.to raise_error(ArgumentError, /Argument must be a boolean/)
+        end
+      end
+    end
+
+    context 'when configuring aws android arn' do
+      context 'with correct argument' do
+        let(:aws_android_arn) { 'arn:aws:app/GCM' }
+        before do
+          described_class.configure do |config|
+            config.aws_android_arn = aws_android_arn
+          end
+        end
+
+        it 'can be configured' do
+          expect(described_class.aws_android_arn).to eq(aws_android_arn)
+        end
+      end
+
+      context 'with incorrect argument' do
+        let(:wrong_arn) { 1234 }
+        let(:wrong_config) do
+          described_class.configure do |config|
+            config.aws_android_arn = wrong_arn
+          end
+        end
+
+        it 'raises ArgumentError' do
+          expect { wrong_config }.to raise_error(ArgumentError, /Argument must be a string/)
         end
       end
     end
