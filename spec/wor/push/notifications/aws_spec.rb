@@ -171,15 +171,30 @@ describe Wor::Push::Notifications::Aws do
     end
 
     context 'when configuring aws ios arn' do
-      let(:aws_ios_arn) { 'arn:aws:app/APNS_SANDBOX' }
-      before do
-        described_class.configure do |config|
-          config.aws_ios_arn = aws_ios_arn
+      context 'with correct argument' do
+        let(:aws_ios_arn) { 'arn:aws:app/APNS_SANDBOX' }
+        before do
+          described_class.configure do |config|
+            config.aws_ios_arn = aws_ios_arn
+          end
+        end
+
+        it 'can be configured' do
+          expect(described_class.aws_ios_arn).to eq(aws_ios_arn)
         end
       end
 
-      it 'can be configured' do
-        expect(described_class.aws_ios_arn).to eq(aws_ios_arn)
+      context 'with incorrect argument' do
+        let(:wrong_arn) { 1234 }
+        let(:wrong_config) do
+          described_class.configure do |config|
+            config.aws_ios_arn = wrong_arn
+          end
+        end
+
+        it 'raises ArgumentError' do
+          expect { wrong_config }.to raise_error(ArgumentError, /Argument must be a string/)
+        end
       end
     end
 
@@ -212,15 +227,30 @@ describe Wor::Push::Notifications::Aws do
     end
 
     context 'when configuring aws android arn' do
-      let(:aws_android_arn) { 'arn:aws:app/GCM' }
-      before do
-        described_class.configure do |config|
-          config.aws_android_arn = aws_android_arn
+      context 'with correct argument' do
+        let(:aws_android_arn) { 'arn:aws:app/GCM' }
+        before do
+          described_class.configure do |config|
+            config.aws_android_arn = aws_android_arn
+          end
+        end
+
+        it 'can be configured' do
+          expect(described_class.aws_android_arn).to eq(aws_android_arn)
         end
       end
 
-      it 'can be configured' do
-        expect(described_class.aws_android_arn).to eq(aws_android_arn)
+      context 'with incorrect argument' do
+        let(:wrong_arn) { 1234 }
+        let(:wrong_config) do
+          described_class.configure do |config|
+            config.aws_android_arn = wrong_arn
+          end
+        end
+
+        it 'raises ArgumentError' do
+          expect { wrong_config }.to raise_error(ArgumentError, /Argument must be a string/)
+        end
       end
     end
   end

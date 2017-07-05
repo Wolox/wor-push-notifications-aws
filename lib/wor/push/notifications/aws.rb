@@ -38,6 +38,7 @@ module Wor
         end
 
         def self.aws_ios_arn=(aws_ios_arn)
+          raise ArgumentError, 'Argument must be a string' unless aws_ios_arn.is_a?(String)
           @config[:aws_ios_arn] = aws_ios_arn
         end
 
@@ -47,6 +48,7 @@ module Wor
         end
 
         def self.aws_android_arn=(aws_android_arn)
+          raise ArgumentError, 'Argument must be a string' unless aws_android_arn.is_a?(String)
           @config[:aws_android_arn] = aws_android_arn
         end
 
