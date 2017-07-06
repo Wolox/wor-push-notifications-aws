@@ -4,12 +4,11 @@ require 'wor/push/notifications/aws/ios_push_json_builder'
 class PushNotifications
   class << self
     def add_token(user, device_token, device_type)
-      return false unless device_type_valid?(device_type) && device_token.present?
+      PushNotificationsValidator.new(user, device_token, device_type).validate_add_token
       device_token = device_token.to_s.gsub(/\s+/, '')
       return true if user.device_tokens.key?(device_token)
       endpoint = sns.create_platform_endpoint(
-        platform_application_arn: app_arn(device_type),
-        token: device_token
+        platform_application_arn: app_arn(device_type), token: device_token
       )
       user.device_tokens[device_token] = { 'device_type' => device_type,
                                            'endpoint_arn' => endpoint[:endpoint_arn] }
@@ -17,6 +16,7 @@ class PushNotifications
     end
 
     def delete_token(user, device_token)
+      PushNotificationsValidator.new(user).validate_delete_token
       device_token = device_token.to_s.gsub(/\s+/, '')
       return true unless user.device_tokens.key?(device_token)
       sns.delete_endpoint(endpoint_arn: user.device_tokens[device_token]['endpoint_arn'])
@@ -25,14 +25,11 @@ class PushNotifications
     end
 
     def send_message(user, message_content)
+      PushNotificationsValidator.new(user).validate_send_message
       send_notifications_to_user(user, message_content)
     end
 
     private
-
-    def device_type_valid?(device_type)
-      Wor::Push::Notifications::Aws.device_types.include? device_type
-    end
 
     def send_notifications_to_user(user, message_content)
       return false if user.device_tokens.values.empty?
