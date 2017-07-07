@@ -19,7 +19,7 @@ Or install it yourself as:
 
 ## Configuration
 To use the gem, firstly we have to configure it. But don’t worry since the configuration simply consists of these three steps:
-1. Firstly, add `require 'aws-sdk-rails'` to your application.rb in order to include the required aws modules. Once then, you’ll be able to configure your aws instance (see “AWS credentials” section).
+1. Firstly, add `require 'aws-sdk-rails'` to your application.rb in order to include the required aws modules. Once then, you’ll be able to configure your aws instance (see [AWS credentials](#aws-credentials) section).
 2. Then, under the config/initializers dir, create the file `wor_push_notifications_aws.rb`, with:
 ```ruby
 Wor::Push::Notifications::Aws.configure do |config|
@@ -28,9 +28,11 @@ Wor::Push::Notifications::Aws.configure do |config|
   config.aws_region = 'us-east-1'
   config.aws_android_arn = 'android:arn'
   config.aws_ios_arn = 'ios:arn'
-  config.aws_ios_badge = [true/false]
+  config.aws_ios_badge = true/false
 end
 ```
+If you don't know where to get the arn values, please see [SNS Setup](#sns-setup) section.
+
 3. The last step involves running the install generator, which basically will create a migration file so that we add a column to your selected table which will store the tokens. To run the generator, run the following commands:
 ```ruby
 $ rails generate wor:push:notifications:aws:install
@@ -38,7 +40,7 @@ $ rake db:migrate
 ```
 
 ## Usage
-***Note***: If you haven’t configured sns, now it’s the moment. (See “SNS Setup”).
+***Note***: If you haven’t configured sns, now it’s the moment. (See [SNS Setup](#sns-setup)).
 
 So far we have the gem and sns configured, so let’s move to what the gem can do.
 As it’s purpose is to make the app send push notifications, there are 3 methods, **add_token**, **delete_token** and **send_message**, to add/delete the device_token, and to send the message.
@@ -76,11 +78,12 @@ PushNotifications.send_message(user, message_content)
                    ***[Some comments about the format of the message_content ( { message: "bla bla"} )]***
 
 ## AWS Credentials
-[Requirements (aws) -> credentials and arn needed.
-Suggest to use ENV variables & secrets when setting up the configuration.
-Point out that the credentials have to be set up as one of the ways that appear in the
-"credentials" section at http://docs.aws.amazon.com/sdkforruby/api/Aws/SNS/Client.html.]
+In order to use Aws SNS, you'll need to have Aws configured with the right credentials.
+You can set up them according to one of the ways explained under the
+"credentials" section at http://docs.aws.amazon.com/sdkforruby/api/Aws/SNS/Client.html.
+We recommend to use ENV variables with Rails secrets when setting up the configuration.
 
+*Note:* Aws region is specified in the [initializer file](#configuration).
 ## SNS Setup
 ***[Tutorial to setup SNS]***
 
