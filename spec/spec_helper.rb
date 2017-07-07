@@ -6,4 +6,3 @@ require 'wor/push/notifications/aws/validators/push_notifications_validator'
 require 'rails'
 
 require 'byebug'
-require 'spec_helper'
