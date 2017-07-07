@@ -34,21 +34,21 @@ end
 3. The last step involves running the install generator, which basically will create a migration file so that we add a column to your selected table which will store the tokens. To run the generator, run the following commands:
 ```ruby
 $ rails generate wor:push:notifications:aws:install
-$ rails db:migrate
+$ rake db:migrate
 ```
 
 ## Usage
 ***Note***: If you haven’t configured sns, now it’s the moment. (See “SNS Setup”).
 
 So far we have the gem and sns configured, so let’s move to what the gem can do.
-As it’s purpose is to make the app send push notifications, there are 3 methods, add_token, delete_token and send_message, to add/delete the device_token, and to send the message.
+As it’s purpose is to make the app send push notifications, there are 3 methods, **add_token**, **delete_token** and **send_message**, to add/delete the device_token, and to send the message.
 
 ***[here some comments about device token and device type.]***
 
 ### Add token
-Attach device_tokens to a given user instance.
+Attach device_tokens to a given user instance:
 ```ruby
-add_token(user, device_token, device_type)
+PushNotifications.add_token(user, device_token, device_type)
 ```
 #### Parameters
 - user: Instance where we want to add the device_token so that we can send push notifications.
@@ -56,18 +56,18 @@ add_token(user, device_token, device_type)
 - device_type: So far we support the values :android or :ios
 
 ### Delete token
-Delete token from the user instance.
+Delete token from the user instance:
 ```ruby
-delete_token(user, device_token)
+PushNotifications.delete_token(user, device_token)
 ```
 #### Parameters
 - user: Instance where we want to add the device_token so that we can send push notifications.
 - device_token
 
 ### Send message
-Send a given message to the user instance.
+Send a given message to the user instance:
 ```ruby
-send_message(user, message_content)
+PushNotifications.send_message(user, message_content)
 ```
 #### Parameters
 - user: Instance which will receive the message. It must have added the device_token before.
@@ -92,7 +92,7 @@ Postgres 9.3 or higher is required.
 1. Fork it
 2. Create your feature branch (`git checkout -b my-new-feature`)
 3. Commit your changes (`git commit -am 'Add some feature'`)
-4. Run rubocop lint (`rubocop -R --format simple`)
+4. Run rubocop lint (`bundle exec rubocop -R --format simple`)
 5. Run rspec tests (`bundle exec rspec`)
 6. Push your branch (`git push origin my-new-feature`)
 7. Create a new Pull Request
@@ -104,8 +104,7 @@ This project is maintained by [Leandro Masello](https://github.com/lmasello) alo
 ![Wolox](https://raw.githubusercontent.com/Wolox/press-kit/master/logos/logo_banner.png)
 
 ## License
-**wor-push-notifications-aws** is available under the MIT [license](https://raw.githubusercontent.com/Wolox/wor-authentication/master/LICENSE.md).
-
+**wor-push-notifications-aws** is available under the MIT [license](https://raw.githubusercontent.com/Wolox/wor-push-notifications-aws/master/LICENSE.txt).
     Copyright (c) 2017 Wolox
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
