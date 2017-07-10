@@ -18,9 +18,8 @@ Or install it yourself as:
     $ gem install wor-push-notifications-aws
 
 ## Configuration
-To use the gem, firstly we have to configure it. But don’t worry since the configuration simply consists of these three steps:
-1. Firstly, add `require 'aws-sdk-rails'` to your application.rb in order to include the required aws modules. Once then, you’ll be able to configure your aws instance (see [AWS credentials](#aws-credentials) section).
-2. Then, under the config/initializers dir, create the file `wor_push_notifications_aws.rb`, with:
+To use the gem, firstly we have to configure it. But don’t worry since the configuration simply consists of these two steps:
+1. Firstly, under the config/initializers dir, create the file `wor_push_notifications_aws.rb`:
 ```ruby
 Wor::Push::Notifications::Aws.configure do |config|
   config.device_types = [:ios, :android] 		# optional
@@ -33,7 +32,7 @@ end
 ```
 If you don't know where to get the arn values, please see [SNS Setup](#sns-setup) section.
 
-3. The last step involves running the install generator, which basically will create a migration file so that we add a column to your selected table which will store the tokens. To run the generator, run the following commands:
+2. The following step involves running the install generator, which basically will create a migration file so that we add a column to your selected table which will store the tokens. To run the generator, run the following commands:
 ```ruby
 $ rails generate wor:push:notifications:aws:install
 $ rake db:migrate
@@ -50,7 +49,7 @@ As it’s purpose is to make the app send push notifications, there are 3 method
 ### Add token
 Attach device_tokens to a given user instance:
 ```ruby
-PushNotifications.add_token(user, device_token, device_type)
+Wor::Push::Notifications::Aws.add_token(user, device_token, device_type)
 ```
 #### Parameters
 - user: Instance where we want to add the device_token so that we can send push notifications.
@@ -60,7 +59,7 @@ PushNotifications.add_token(user, device_token, device_type)
 ### Delete token
 Delete token from the user instance:
 ```ruby
-PushNotifications.delete_token(user, device_token)
+Wor::Push::Notifications::Aws.delete_token(user, device_token)
 ```
 #### Parameters
 - user: Instance where we want to add the device_token so that we can send push notifications.
@@ -69,7 +68,7 @@ PushNotifications.delete_token(user, device_token)
 ### Send message
 Send a given message to the user instance:
 ```ruby
-PushNotifications.send_message(user, message_content)
+Wor::Push::Notifications::Aws.send_message(user, message_content)
 ```
 #### Parameters
 - user: Instance which will receive the message. It must have added the device_token before.
