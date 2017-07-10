@@ -2,7 +2,7 @@ require 'spec_helper'
 require_relative './../mocks/user_with_device_tokens_attribute'
 require_relative './../mocks/user_without_device_tokens_attribute'
 
-describe PushNotificationsValidator do
+describe Wor::Push::Notifications::Aws::PushNotificationsValidator do
   subject { described_class.new(model, device_token, device_type) }
   let(:user_mail) { 'example@example.com' }
 
