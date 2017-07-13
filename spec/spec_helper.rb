@@ -5,4 +5,3 @@ require 'wor/push/notifications/aws'
 require 'rails'
 
 require 'byebug'
-require 'spec_helper'
