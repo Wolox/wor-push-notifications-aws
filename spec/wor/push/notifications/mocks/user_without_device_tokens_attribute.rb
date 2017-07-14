@@ -6,4 +6,8 @@ class UserWithoutDeviceTokensAttribute
   def has_attribute?(_attr)
     false
   end
+
+  def save
+    false
+  end
 end
