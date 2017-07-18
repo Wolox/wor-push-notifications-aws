@@ -72,10 +72,13 @@ Send a given message to the user instance:
 Wor::Push::Notifications::Aws.send_message(user, message_content)
 ```
 #### Parameters
-- user: Instance which will receive the message. It must have added the device_token before.
-- message_content: Message we want to send to the user.
-                   This parameter must follow a specific format.
-                   ***[Some comments about the format of the message_content ( { message: "bla bla"} )]***
+- user: Instance which will receive the message. It must have the `device_tokens` from the user's phones.
+- message_content: Message you want to send to the user. This parameter must have a JSON format.
+                   - It **requires** the `message` field.
+                   - You can add a `badge` field (integer type) to be included in the app icon to show how many pending notifications the user has.
+                   - You can include any other field in the JSON, with the information you need to send in the push notification
+
+**\*BADGE:** iOS shows the badge automatically, but you have to include it yourself in Android devices.
 
 ## AWS Credentials
 In order to use Aws SNS, you'll need to have Aws configured with the right credentials.
