@@ -25,8 +25,9 @@ Wor::Push::Notifications::Aws.configure do |config|
   config.device_types = [:ios, :android] 		# optional
   config.table_name = 'users'          			# optional
   config.aws_region = 'us-east-1'
-  config.aws_android_arn = 'android:arn'
-  config.aws_ios_arn = 'ios:arn'
+  config.aws_android_arn = 'android:arn'    # optional if you don't choose to use android devices
+  config.aws_ios_arn = 'ios:arn'            # optional if you don't choose to use iOS devices
+  config.aws_ios_sandbox = true/false       # optional if you don't choose to use iOS devices
   config.aws_ios_badge = true/false
 end
 ```
@@ -83,8 +84,26 @@ You can set up them according to one of the ways explained under the
 We recommend to use ENV variables with Rails secrets when setting up the configuration.
 
 *Note:* Aws region is specified in the [initializer file](#configuration).
+
 ## SNS Setup
-***[Tutorial to setup SNS]***
+
+For a full SNS setup explanation read this [documentation](#tech-guides-instructions)
+
+**If you HAVE an SNS Application follow this instructions**
+
+- i) Log in the AWS Console
+- ii) Click on Services and select Simple Notification Services in Messaging group
+- iii) Select Applications tab in the left panel
+- iv) You will have all of yours application and theirs **ARN** listed in a table
+- v) When selecting any of them you can see more details of each application, with the information if it's a SANDBOX environment in the iOS case
+
+You will have to create an instance profile for the Elastic Beanstalk environment that's running your application, with the permissions to access the Simple Notification Service or get an AWS_ACCESS_KEY and AWS_SECRET_KEY pair to access this service from outside of AWS.
+
+If you don't know how to do any of them, please check the SNS full [documentation](#tech-guides-instructions).
+
+If you want more information about AWS SNS visit the [documentation](http://docs.aws.amazon.com/sns/latest/dg/SNSMobilePush.html) page.
+If you want more information on how to use AWS with Google Cloud Messaging (for Android) check this [documentation](http://docs.aws.amazon.com/sns/latest/dg/mobile-push-gcm.html).
+If you want more information on how to use AWS with Apple Push Notifications Service (for iOS) check this [documentation](http://docs.aws.amazon.com/sns/latest/dg/mobile-push-apns.html).
 
 ## Requirements
 Since a json attribute is needed to store device_tokens on the user table,
