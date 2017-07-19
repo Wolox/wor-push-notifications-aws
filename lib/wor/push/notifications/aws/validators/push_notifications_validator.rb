@@ -30,7 +30,7 @@ module Wor
           end
 
           def validate_message_content(message_content)
-            raise message_for_invalid_message_content unless message_content[:message].present?
+            raise message_for_invalid_message_content if message_content[:message].blank?
           end
 
           def validate_parameters
