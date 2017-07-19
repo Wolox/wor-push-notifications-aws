@@ -1,4 +1,7 @@
 # Wor::Push::Notifications::Aws
+
+[![CircleCI](https://circleci.com/gh/Wolox/wor-push-notifications-aws.svg?style=svg)](https://circleci.com/gh/Wolox/wor-push-notifications-aws)
+
 Provide basic setup for storing device tokens and sending Push Notifications to your application using AWS Simple Notification Service (SNS).
 
 ## Installation
