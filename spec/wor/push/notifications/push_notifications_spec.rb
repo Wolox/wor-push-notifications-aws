@@ -81,7 +81,7 @@ describe Wor::Push::Notifications::Aws::PushNotifications do
   describe '#send_message' do
     subject(:send_message) { described_class.send_message(user, message_content) }
     let(:user) { UserWithDeviceTokensAttribute.new('user@example.com') }
-    let(:message_content) { {} }
+    let(:message_content) { { message: 'A message' } }
 
     it 'validates the method' do
       expect_any_instance_of(Wor::Push::Notifications::Aws::PushNotificationsValidator)

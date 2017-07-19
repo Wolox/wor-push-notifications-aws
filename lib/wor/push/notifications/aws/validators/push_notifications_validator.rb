@@ -10,12 +10,12 @@ module Wor
           end
 
           def validate_add_token
-            validate_existence_of_attributes
+            validate_existence_of_attributes_in_model
             validate_parameters
           end
 
           def validate_delete_token
-            validate_existence_of_attributes
+            validate_existence_of_attributes_in_model
           end
 
           def validate_send_message(message_content)
