@@ -76,9 +76,9 @@ Wor::Push::Notifications::Aws.send_message(user, message_content)
 #### Parameters
 - user: Instance which will receive the message. It must have the `device_tokens` from the user's phones.
 - message_content: Message you want to send to the user. This parameter must have a JSON format.
-                   - It **requires** the `message` field.
-                   - You can add a `badge` field (integer type) to be included in the app icon to show how many pending notifications the user has.
-                   - You can include any other field in the JSON, with the information you need to send in the push notification
+  - It **requires** the `message` field.
+  - You can add a `badge` field (integer type) to be included in the app icon to show how many pending notifications the user has.
+  - You can include any other field in the JSON, with the information you need to send in the push notification
 
 **\*BADGE:** iOS shows the badge automatically, but you have to include it yourself in Android devices.
 
@@ -114,9 +114,9 @@ You will have to create an instance profile for the Elastic Beanstalk environmen
 
 If you don't know how to do any of them, please check the SNS full [documentation](#tech-guides-instructions).
 
-If you want more information about AWS SNS visit the [documentation](http://docs.aws.amazon.com/sns/latest/dg/SNSMobilePush.html) page.
-If you want more information on how to use AWS with Google Cloud Messaging (for Android) check this [documentation](http://docs.aws.amazon.com/sns/latest/dg/mobile-push-gcm.html).
-If you want more information on how to use AWS with Apple Push Notifications Service (for iOS) check this [documentation](http://docs.aws.amazon.com/sns/latest/dg/mobile-push-apns.html).
+If you want more information about AWS SNS visit the [documentation](http://docs.aws.amazon.com/sns/latest/dg/SNSMobilePush.html) page.  
+If you want more information on how to use AWS with Google Cloud Messaging (for Android) check this [documentation](http://docs.aws.amazon.com/sns/latest/dg/mobile-push-gcm.html).  
+If you want more information on how to use AWS with Apple Push Notifications Service (for iOS) check this [documentation](http://docs.aws.amazon.com/sns/latest/dg/mobile-push-apns.html).  
 
 ## Requirements
 Since a json attribute is needed to store device_tokens on the user table,
