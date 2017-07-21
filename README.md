@@ -47,7 +47,10 @@ $ rake db:migrate
 So far we have the gem and sns configured, so let’s move to what the gem can do.
 As it’s purpose is to make the app send push notifications, there are 3 methods, **add_token**, **delete_token** and **send_message**, to add/delete the device_token, and to send the message.
 
-***[here some comments about device token and device type.]***
+The device token is a unique token obtained from each pair of App and Device. This token is used for creating an endpoint to identify your users' phones to which you will be sending the push notifications.
+
+The device type identifies from which type of device you have obtained the device token, because the data used for each platform is different.  
+iOS and Android are the only device types supported for the moment.
 
 ### Add token
 Attach device_tokens to a given user instance:
@@ -100,7 +103,7 @@ We recommend to use ENV variables with Rails secrets when setting up the configu
 
 ## SNS Setup
 
-**If you HAVE an SNS Application follow this instructions**
+**If you HAVE a SNS Application follow this instructions**
 
 - i) Log in the AWS Console
 - ii) Click on Services and select Simple Notification Services in Messaging group
