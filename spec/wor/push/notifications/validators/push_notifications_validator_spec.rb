@@ -77,11 +77,12 @@ describe Wor::Push::Notifications::Aws::PushNotificationsValidator do
   end
 
   describe '#validate_send_message' do
-    let(:validate_send_message) { subject.validate_send_message }
+    let(:validate_send_message) { subject.validate_send_message(message_content) }
     let(:device_token) { nil }
     let(:device_type) { nil }
 
-    context 'when the model contains device_tokens attribute' do
+    context 'with valid parameters' do
+      let(:message_content) { { message: 'A message' } }
       let(:model) { UserWithDeviceTokensAttribute.new(user_mail) }
 
       it 'does not raise error' do
@@ -89,7 +90,19 @@ describe Wor::Push::Notifications::Aws::PushNotificationsValidator do
       end
     end
 
+    context 'with invalid message content' do
+      # Does not have 'message' field
+      let(:message_content) { { other_field: 'some information' } }
+      let(:model) { UserWithDeviceTokensAttribute.new(user_mail) }
+
+      it 'raises runtime error with a descriptive message' do
+        expect { validate_send_message }
+          .to raise_error(RuntimeError, /the message_content must have a 'message' field/)
+      end
+    end
+
     context 'when the model does not have the device_tokens attribute' do
+      let(:message_content) { { message: 'A message' } }
       let(:model) { UserWithoutDeviceTokensAttribute.new(user_mail) }
 
       it 'raises runtime error with a descriptive message' do

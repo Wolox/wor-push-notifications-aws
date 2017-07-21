@@ -31,7 +31,8 @@ module Wor
             end
 
             def send_message(user, message_content)
-              PushNotificationsValidator.new(user).validate_send_message
+              PushNotificationsValidator.new(user).validate_send_message(message_content)
+              message_content = badge_check(message_content)
               send_notifications_to_user(user, message_content)
             end
 
@@ -79,6 +80,11 @@ module Wor
                   json_builder: AndroidPushJsonBuilder
                 }
               }
+            end
+
+            def badge_check(message_content)
+              message_content[:badge] = 1 if message_content[:badge].nil?
+              message_content
             end
           end
         end

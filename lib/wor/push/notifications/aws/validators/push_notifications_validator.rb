@@ -10,22 +10,27 @@ module Wor
           end
 
           def validate_add_token
-            validate_existence_of_attributes
+            validate_existence_of_attributes_in_model
             validate_parameters
           end
 
           def validate_delete_token
-            validate_existence_of_attributes
+            validate_existence_of_attributes_in_model
           end
 
-          def validate_send_message
-            validate_existence_of_attributes
+          def validate_send_message(message_content)
+            validate_existence_of_attributes_in_model
+            validate_message_content(message_content)
           end
 
           private
 
-          def validate_existence_of_attributes
+          def validate_existence_of_attributes_in_model
             raise message_for_missing_attribute unless @model.has_attribute?(:device_tokens)
+          end
+
+          def validate_message_content(message_content)
+            raise message_for_invalid_message_content if message_content[:message].blank?
           end
 
           def validate_parameters
@@ -44,6 +49,10 @@ module Wor
 
           def message_for_nil_device_token
             'device_token cannot be nil.'
+          end
+
+          def message_for_invalid_message_content
+            "the message_content must have a 'message' field"
           end
 
           def device_type_valid?
