@@ -100,8 +100,6 @@ We recommend to use ENV variables with Rails secrets when setting up the configu
 
 ## SNS Setup
 
-For a full SNS setup explanation read this [documentation](sns-documentation.md)
-
 **If you HAVE an SNS Application follow this instructions**
 
 - i) Log in the AWS Console
@@ -111,8 +109,6 @@ For a full SNS setup explanation read this [documentation](sns-documentation.md)
 - v) When selecting any of them you can see more details of each application, with the information if it's a SANDBOX environment in the iOS case
 
 You will have to create an instance profile for the Elastic Beanstalk environment that's running your application, with the permissions to access the Simple Notification Service or get an AWS_ACCESS_KEY and AWS_SECRET_KEY pair to access this service from outside of AWS.
-
-If you don't know how to do any of them, please check the SNS full [documentation](sns-documentation.md).
 
 If you want more information about AWS SNS visit the [documentation](http://docs.aws.amazon.com/sns/latest/dg/SNSMobilePush.html) page.  
 If you want more information on how to use AWS with Google Cloud Messaging (for Android) check this [documentation](http://docs.aws.amazon.com/sns/latest/dg/mobile-push-gcm.html).  
