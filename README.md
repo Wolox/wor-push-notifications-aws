@@ -35,7 +35,7 @@ end
 ```
 If you don't know where to get the arn values, please see [SNS Setup](#sns-setup) section.
 
-2. The following step involves running the install generator, which basically will create a migration file so that we add a column to your selected table which will store the tokens. To run the generator, run the following commands:
+2. The following step involves running the install generator, which basically creates a migration file to add a column to your selected table in order to store the tokens. To run the generator, run the following commands:
 ```ruby
 $ rails generate wor:push:notifications:aws:install
 $ rake db:migrate
@@ -55,8 +55,8 @@ Attach device_tokens to a given user instance:
 Wor::Push::Notifications::Aws.add_token(user, device_token, device_type)
 ```
 #### Parameters
-- user: Instance where we want to add the device_token so that we can send push notifications.
-- device_token
+- user: Instance where we want to store the device_token, to which we will send push notifications.
+- device_token: Unique identifier you get from the the app.
 - device_type: So far we support the values :android or :ios
 
 ### Delete token
@@ -65,8 +65,8 @@ Delete token from the user instance:
 Wor::Push::Notifications::Aws.delete_token(user, device_token)
 ```
 #### Parameters
-- user: Instance where we want to add the device_token so that we can send push notifications.
-- device_token
+- user: Instance where we want to store the device_token, to which we will send push notifications.
+- device_token: Unique identifier you get from the the app.
 
 ### Send message
 Send a given message to the user instance:
