@@ -29,12 +29,12 @@ To use the gem, firstly we have to configure it. But don’t worry since the con
 1. Firstly, under the config/initializers dir, create the file `wor_push_notifications_aws.rb`:
 ```ruby
 Wor::Push::Notifications::Aws.configure do |config|
-  config.device_types = [:ios, :android] 		# optional
-  config.table_name = 'users'          			# optional
+  config.device_types = [:ios, :android]       		# optional
+  config.table_name = 'users'                 		# optional
   config.aws_region = 'us-east-1'
-  config.aws_android_arn = 'android:arn'    # mandatory field if you choose to use Android devices
-  config.aws_ios_arn = 'ios:arn'            # mandatory field if you choose to use iOS devices
-  config.aws_ios_sandbox = true/false       # mandatory field if you choose to use iOS devices
+  config.aws_android_arn = 'some:android:arn'     # mandatory field if you choose to use Android devices
+  config.aws_ios_arn = 'some:ios:arn'             # mandatory field if you choose to use iOS devices
+  config.aws_ios_sandbox = true                   # mandatory field if you choose to use iOS devices
 end
 ```
 If you don't know where to get the arn values, please see [SNS Setup](#sns-setup) section.
