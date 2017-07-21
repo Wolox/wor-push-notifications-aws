@@ -1,6 +1,10 @@
 # Wor::Push::Notifications::Aws
 
-[![CircleCI](https://circleci.com/gh/Wolox/wor-push-notifications-aws.svg?style=svg)](https://circleci.com/gh/Wolox/wor-push-notifications-aws)
+[![Gem Version](https://badge.fury.io/rb/wor-push-notifications-aws.svg)](https://badge.fury.io/rb/wor-push-notifications-aws)
+[![Dependency Status](https://gemnasium.com/badges/github.com/Wolox/wor-push-notifications-aws.svg)](https://gemnasium.com/github.com/Wolox/wor-push-notifications-aws)
+[![Build Status](https://circleci.com/gh/Wolox/wor-push-notifications-aws.svg?style=svg)](https://circleci.com/gh/Wolox/wor-push-notifications-aws)
+[![Code Climate](https://codeclimate.com/github/Wolox/wor-push-notifications-aws/badges/gpa.svg)](https://codeclimate.com/github/Wolox/wor-push-notifications-aws)
+[![Test Coverage](https://codeclimate.com/github/Wolox/wor-push-notifications-aws/badges/coverage.svg)](https://codeclimate.com/github/Wolox/wor-push-notifications-aws/coverage)
 
 Provide basic setup for storing device tokens and sending Push Notifications to your application using AWS Simple Notification Service (SNS).
 
@@ -25,17 +29,17 @@ To use the gem, firstly we have to configure it. But don’t worry since the con
 1. Firstly, under the config/initializers dir, create the file `wor_push_notifications_aws.rb`:
 ```ruby
 Wor::Push::Notifications::Aws.configure do |config|
-  config.device_types = [:ios, :android] 		# optional
-  config.table_name = 'users'          			# optional
+  config.device_types = [:ios, :android]       		# optional
+  config.table_name = 'users'                 		# optional
   config.aws_region = 'us-east-1'
-  config.aws_android_arn = 'android:arn'    # mandatory field if you choose to use Android devices
-  config.aws_ios_arn = 'ios:arn'            # mandatory field if you choose to use iOS devices
-  config.aws_ios_sandbox = true/false       # mandatory field if you choose to use iOS devices
+  config.aws_android_arn = 'some:android:arn'     # mandatory field if you choose to use Android devices
+  config.aws_ios_arn = 'some:ios:arn'             # mandatory field if you choose to use iOS devices
+  config.aws_ios_sandbox = true                   # mandatory field if you choose to use iOS devices
 end
 ```
 If you don't know where to get the arn values, please see [SNS Setup](#sns-setup) section.
 
-2. The following step involves running the install generator, which basically will create a migration file so that we add a column to your selected table which will store the tokens. To run the generator, run the following commands:
+2. The following step involves running the install generator, which basically creates a migration file to add a column to your selected table in order to store the tokens. To run the generator, run the following commands:
 ```ruby
 $ rails generate wor:push:notifications:aws:install
 $ rake db:migrate
@@ -58,8 +62,8 @@ Attach device_tokens to a given user instance:
 Wor::Push::Notifications::Aws.add_token(user, device_token, device_type)
 ```
 #### Parameters
-- user: Instance where we want to add the device_token so that we can send push notifications.
-- device_token
+- user: Instance where we want to store the device_token, to which we will send push notifications.
+- device_token: Unique identifier you get from the the app.
 - device_type: So far we support the values :android or :ios
 
 ### Delete token
@@ -68,8 +72,8 @@ Delete token from the user instance:
 Wor::Push::Notifications::Aws.delete_token(user, device_token)
 ```
 #### Parameters
-- user: Instance where we want to add the device_token so that we can send push notifications.
-- device_token
+- user: Instance where we want to store the device_token, to which we will send push notifications.
+- device_token: Unique identifier you get from the the app.
 
 ### Send message
 Send a given message to the user instance:
