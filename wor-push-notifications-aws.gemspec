@@ -21,14 +21,4 @@ Gem::Specification.new do |spec|
 
   spec.add_dependency 'railties', '>= 4.1.0', '< 5.2'
   spec.add_dependency 'aws-sdk-rails', "~> 1.0"
-
-  spec.add_development_dependency "bundler", "~> 1.13"
-  spec.add_development_dependency "rake", "~> 10.0"
-  spec.add_development_dependency "rspec", "~> 3.0"
-  spec.add_development_dependency 'rspec-rails', '~> 3.5'
-  spec.add_development_dependency 'byebug', '~> 9.0'
-  spec.add_development_dependency 'rubocop', '~> 0.48'
-  spec.add_development_dependency 'codeclimate-test-reporter', '~> 1.0.0'
-  spec.add_development_dependency 'generator_spec'
-  spec.add_development_dependency 'simplecov'
 end
