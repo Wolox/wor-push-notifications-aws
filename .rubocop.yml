@@ -1,0 +1,24 @@
+# This is the configuration used to check the rubocop source code.
+
+Rails:
+  Enabled: true
+
+AllCops:
+  Exclude:
+    - wor-push-notifications-aws.gemspec
+    - lib/generators/templates/add_device_token.rb
+
+Documentation:
+  Enabled: false
+
+LineLength:
+  Max: 99
+
+Style/FrozenStringLiteralComment:
+  Enabled: false
+
+Style/BlockDelimiters:
+  IgnoredMethods: ['have_structure']
+
+Metrics/BlockLength:
+  ExcludedMethods: ['describe', 'context', 'before']
