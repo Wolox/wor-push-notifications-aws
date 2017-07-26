@@ -19,14 +19,27 @@ describe Wor::Push::Notifications::Aws::PushNotificationsValidator do
       end
     end
 
+    context 'when the model is nil' do
+      let(:model) { nil }
+      let(:device_token) { '1234567890' }
+      let(:device_type) { :ios }
+
+      it 'raises runtime error with a descriptive message' do
+        expect { validate_add_token }.to raise_error(ArgumentError,
+                                                     /your entity instance cannot be nil./)
+      end
+    end
+
     context 'when the model does not have device_tokens attribute' do
       let(:model) { UserWithoutDeviceTokensAttribute.new(user_mail) }
       let(:device_token) { '1234567890' }
       let(:device_type) { :ios }
 
       it 'raises runtime error with a descriptive message' do
-        expect { validate_add_token }.to raise_error(RuntimeError,
-                                                     /Missing attribute device_tokens/)
+        expect { validate_add_token }.to raise_error(
+          Wor::Push::Notifications::Aws::Exceptions::ModelWithoutDeviceTokensAttribute,
+          /Missing attribute device_tokens/
+        )
       end
     end
 
@@ -58,6 +71,15 @@ describe Wor::Push::Notifications::Aws::PushNotificationsValidator do
     let(:device_token) { nil }
     let(:device_type) { nil }
 
+    context 'when the model is nil' do
+      let(:model) { nil }
+
+      it 'raises runtime error with a descriptive message' do
+        expect { validate_delete_token }.to raise_error(ArgumentError,
+                                                        /your entity instance cannot be nil./)
+      end
+    end
+
     context 'when the model contains device_tokens attribute' do
       let(:model) { UserWithDeviceTokensAttribute.new(user_mail) }
 
@@ -70,8 +92,10 @@ describe Wor::Push::Notifications::Aws::PushNotificationsValidator do
       let(:model) { UserWithoutDeviceTokensAttribute.new(user_mail) }
 
       it 'raises runtime error with a descriptive message' do
-        expect { validate_delete_token }.to raise_error(RuntimeError,
-                                                        /Missing attribute device_tokens/)
+        expect { validate_delete_token }.to raise_error(
+          Wor::Push::Notifications::Aws::Exceptions::ModelWithoutDeviceTokensAttribute,
+          /Missing attribute device_tokens/
+        )
       end
     end
   end
@@ -90,6 +114,16 @@ describe Wor::Push::Notifications::Aws::PushNotificationsValidator do
       end
     end
 
+    context 'when the model is nil' do
+      let(:model) { nil }
+      let(:message_content) { { other_field: 'some information' } }
+
+      it 'raises runtime error with a descriptive message' do
+        expect { validate_send_message }.to raise_error(ArgumentError,
+                                                        /your entity instance cannot be nil./)
+      end
+    end
+
     context 'with invalid message content' do
       # Does not have 'message' field
       let(:message_content) { { other_field: 'some information' } }
@@ -97,7 +131,7 @@ describe Wor::Push::Notifications::Aws::PushNotificationsValidator do
 
       it 'raises runtime error with a descriptive message' do
         expect { validate_send_message }
-          .to raise_error(RuntimeError, /the message_content must have a 'message' field/)
+          .to raise_error(ArgumentError, /the message_content must have a 'message' field/)
       end
     end
 
@@ -106,8 +140,10 @@ describe Wor::Push::Notifications::Aws::PushNotificationsValidator do
       let(:model) { UserWithoutDeviceTokensAttribute.new(user_mail) }
 
       it 'raises runtime error with a descriptive message' do
-        expect { validate_send_message }.to raise_error(RuntimeError,
-                                                        /Missing attribute device_tokens/)
+        expect { validate_send_message }.to raise_error(
+          Wor::Push::Notifications::Aws::Exceptions::ModelWithoutDeviceTokensAttribute,
+          /Missing attribute device_tokens/
+        )
       end
     end
   end
