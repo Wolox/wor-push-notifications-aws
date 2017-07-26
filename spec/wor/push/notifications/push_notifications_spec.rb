@@ -4,7 +4,7 @@ require_relative './mocks/sns_client_mock'
 
 describe Wor::Push::Notifications::Aws::PushNotifications do
   before do
-    allow(Wor::Push::Notifications::Aws::SnsClient).to receive(:new).and_return(SnsClientMock.new)
+    allow(::Aws::SNS::Client).to receive(:new).and_return(SnsClientMock.new)
   end
 
   describe '#add_token' do
