@@ -29,15 +29,17 @@ module Wor
           private
 
           def validate_model_existance
-            raise message_for_nil_model if @model.nil?
+            raise ArgumentError, message_for_nil_model if @model.nil?
           end
 
           def validate_existence_of_attributes_in_model
-            raise message_for_missing_attribute unless @model.has_attribute?(:device_tokens)
+            return if @model.has_attribute?(:device_tokens)
+            raise Wor::Push::Notifications::Aws::Exceptions::ModelWithoutDeviceTokensAttribute,
+                  message_for_missing_attribute_in_model
           end
 
           def validate_message_content(message_content)
-            raise message_for_invalid_message_content if message_content[:message].blank?
+            raise ArgumentError, message_content_error_message if message_content[:message].blank?
           end
 
           def validate_parameters
@@ -45,13 +47,13 @@ module Wor
             raise ArgumentError, message_for_nil_device_token if @device_token.blank?
           end
 
-          def message_for_missing_attribute
-            'Missing attribute device_tokens for model. Have you run the gem migration?'
-          end
-
           def message_for_invalid_device_type
             "Invalid device_type. It has to be one of the types configured \
              #{Wor::Push::Notifications::Aws.device_types}."
+          end
+
+          def message_for_missing_attribute_in_model
+            'Missing attribute device_tokens for model. Have you run the gem migration?'
           end
 
           def message_for_nil_device_token
@@ -62,7 +64,7 @@ module Wor
             'your entity instance cannot be nil.'
           end
 
-          def message_for_invalid_message_content
+          def message_content_error_message
             "the message_content must have a 'message' field"
           end
 
