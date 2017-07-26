@@ -63,7 +63,8 @@ module Wor
 
             def sns
               @sns_client ||= ::Aws::SNS::Client.new(
-                                region: Wor::Push::Notifications::Aws.aws_region)
+                region: Wor::Push::Notifications::Aws.aws_region
+              )
             end
 
             def app_arn(device_type)
