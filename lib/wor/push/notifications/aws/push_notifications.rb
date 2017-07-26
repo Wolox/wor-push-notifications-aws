@@ -1,7 +1,7 @@
 require 'wor/push/notifications/aws/android_push_json_builder'
 require 'wor/push/notifications/aws/ios_push_json_builder'
-require 'wor/push/notifications/aws/services/sns_client'
 require 'wor/push/notifications/aws/validators/push_notifications_validator'
+require 'aws-sdk-rails'
 
 module Wor
   module Push
@@ -62,7 +62,9 @@ module Wor
             end
 
             def sns
-              @sns_client ||= SnsClient.new(Wor::Push::Notifications::Aws.aws_region)
+              @sns_client ||= ::Aws::SNS::Client.new(
+                region: Wor::Push::Notifications::Aws.aws_region
+              )
             end
 
             def app_arn(device_type)

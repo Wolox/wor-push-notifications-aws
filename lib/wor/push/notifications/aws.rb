@@ -86,7 +86,7 @@ module Wor
         end
 
         def self.add_token(user, device_token, device_type)
-          PushNotifications.add_token(user, device_token, device_type)
+          PushNotifications.add_token(user, device_token, device_type.to_sym)
         end
 
         def self.delete_token(user, device_token)
