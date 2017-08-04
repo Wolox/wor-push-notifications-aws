@@ -44,7 +44,7 @@ module Wor
             end
 
             def badge_check(message_content)
-              message_content[:badge] = 1 if message_content[:badge].nil?
+              message_content[:badge] ||= 1
               message_content
             end
           end
