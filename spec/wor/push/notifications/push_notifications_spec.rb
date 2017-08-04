@@ -133,14 +133,6 @@ describe Wor::Push::Notifications::Aws::PushNotifications do
           send_message
         end
       end
-
-      context 'when passing a message_content that is not a Hash' do
-        let(:message_content) { [5, 'String'].sample }
-
-        it 'raises argument error with a descriptive message' do
-          expect { send_message }.to raise_error(ArgumentError, /message_content must be a Hash/)
-        end
-      end
     end
   end
 end
