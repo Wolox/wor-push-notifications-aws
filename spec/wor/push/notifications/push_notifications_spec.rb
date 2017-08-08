@@ -85,7 +85,13 @@ describe Wor::Push::Notifications::Aws::PushNotifications do
 
     it 'validates the method' do
       expect_any_instance_of(Wor::Push::Notifications::Aws::PushNotificationsValidator)
-        .to receive(:validate_send_message)
+        .to receive(:validate_model)
+      send_message
+    end
+
+    it 'validates the message_content' do
+      expect(Wor::Push::Notifications::Aws::PushNotificationsValidator)
+        .to receive(:validate_message_content)
       send_message
     end
 
@@ -108,6 +114,24 @@ describe Wor::Push::Notifications::Aws::PushNotifications do
 
       it 'returns true' do
         expect(send_message).to be true
+      end
+
+      context 'when passing a message_content with symbols as keys' do
+        let(:message_content) { { message: 'A message' } }
+
+        it 'sends the message' do
+          expect_any_instance_of(SnsClientMock).to receive(:publish)
+          send_message
+        end
+      end
+
+      context 'when passing a hash with strings as keys' do
+        let(:message_content) { { 'message' => 'A message' } }
+
+        it 'sends the message' do
+          expect_any_instance_of(SnsClientMock).to receive(:publish)
+          send_message
+        end
       end
     end
   end

@@ -20,10 +20,33 @@ module Wor
             validate_existence_of_attributes_in_model
           end
 
-          def validate_send_message(message_content)
+          def validate_model
             validate_model_existance
             validate_existence_of_attributes_in_model
-            validate_message_content(message_content)
+          end
+
+          class << self
+            def validate_message_content(message_content)
+              raise ArgumentError, message_content_type_error unless message_content.is_a?(Hash)
+              message_content = message_content.with_indifferent_access
+              raise ArgumentError, message_content_error if message_content[:message].blank?
+              badge_check(message_content)
+            end
+
+            private
+
+            def message_content_error
+              "the message_content must have a 'message' field"
+            end
+
+            def message_content_type_error
+              'message_content must be a Hash'
+            end
+
+            def badge_check(message_content)
+              message_content[:badge] ||= 1
+              message_content
+            end
           end
 
           private
@@ -36,10 +59,6 @@ module Wor
             return if @model.has_attribute?(:device_tokens)
             raise Wor::Push::Notifications::Aws::Exceptions::ModelWithoutDeviceTokensAttribute,
                   message_for_missing_attribute_in_model
-          end
-
-          def validate_message_content(message_content)
-            raise ArgumentError, message_content_error_message if message_content[:message].blank?
           end
 
           def validate_parameters
@@ -62,10 +81,6 @@ module Wor
 
           def message_for_nil_model
             'your entity instance cannot be nil.'
-          end
-
-          def message_content_error_message
-            "the message_content must have a 'message' field"
           end
 
           def device_type_valid?
